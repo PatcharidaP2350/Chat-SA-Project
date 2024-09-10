@@ -11,7 +11,7 @@ return(
     </svg>
         </div>
         <div className='changeprice-container'>
-            เสนอราคา
+            เสนอราคา ttttttt
         </div>
         <div className='type-container'>
             พิมพ์ข้อความ...
