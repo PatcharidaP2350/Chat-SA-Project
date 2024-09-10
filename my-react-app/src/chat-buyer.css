@@ -1,0 +1,101 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #fbf9f9, #f7f6f5);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .minibackground-container {
+    padding: 20px;
+    background-color: #beb7b7; 
+    border-radius: 2px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 1500px; 
+    height: 120px;
+    transform: translate(-50%, -50%); /* ย้ายตำแหน่งไปกึ่งกลางพอดี */
+    border-right: 1px solid #ccc; 
+    float: right; 
+    position: absolute; /* ใช้ position เพื่อควบคุมตำแหน่ง */
+    top: 0; /* ชิดด้านบนสุดของหน้าจอ */
+    right: 0; /* ชิดด้านขวาสุดของหน้าจอ */
+    left: 50%; /* กึ่งกลางในแนวนอน */
+    display: flex; /* ใช้ Flexbox เพื่อจัดตำแหน่ง */
+    align-items: center; /* จัดกึ่งกลางแนวตั้ง */
+  } 
+
+  .username {
+    margin-left: 100px; /* ระยะห่างจากด้านซ้าย */
+    margin-top: 79px;
+    /*font-weight: bold;  ทำให้ข้อความเป็นตัวหนา */
+    font-size: 20px; /* ขนาดของข้อความ */
+    color: #000000; /* สีข้อความ */
+}
+
+  .circle {
+    width: 49px; /* ความกว้างของวงกลม */
+    height: 49px; /* ความสูงของวงกลม */
+    background-color: #ffffff; /* สีพื้นหลังของวงกลม */
+    border-radius: 50%; /* ทำให้เป็นวงกลม */
+    position: absolute; /* ใช้ตำแหน่งแบบ absolute */
+    top: 15px; /* ระบุตำแหน่งจากด้านบน */
+    left: 15px; /* ระบุตำแหน่งจากด้านซ้าย */
+    border: 0.5px solid #3f3f3f; /* ขอบวงกลมหนา 5px สีดำ */
+    /*margin-top: 50px;*/
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* เงา */
+    display: flex; /* ใช้ Flexbox สำหรับจัดตำแหน่งไอคอน */
+    justify-content: center; /* จัดกึ่งกลางไอคอนแนวนอน */
+    align-items: center; /* จัดกึ่งกลางไอคอนแนวตั้ง */
+}
+
+.circle svg {
+  width: 32px; /* ความกว้างของไอคอน */
+  height: 32px; /* ความสูงของไอคอน */
+}
+
+.changeprice-container {
+    padding: 20px;
+    background-color: #f15858; 
+    border-radius: 20px; /* ทำให้กล่องโค้ง */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 410px; 
+    height: 20px;
+    transform: translate(-50%, -50%); /* ย้ายตำแหน่งไปกึ่งกลางพอดี */
+    border-right: 1px solid #ccc; 
+    float: right; 
+    position: absolute; /* ใช้ position เพื่อควบคุมตำแหน่ง */
+    /*top: 0;  ชิดด้านบนสุดของหน้าจอ */
+    /* right: 0;  ชิดด้านขวาสุดของหน้าจอ */
+    margin-top: 300px; /**/
+    left: 17%; /* กึ่งกลางในแนวนอน */display: flex; /* ใช้ flexbox เพื่อจัดตำแหน่งข้อความ */
+    justify-content: center; /* จัดข้อความให้อยู่กลางในแนวนอน */
+    align-items: center; /* จัดข้อความให้อยู่กลางในแนวตั้ง */
+    font-size: 24px; /* ขนาดตัวอักษร */
+    color: #fffbfa; /* สีของข้อความ */
+
+}
+
+.type-container {
+    padding: 20px;
+    border: 1px solid #3f3f3f;
+    background-color: #fbfbfb; 
+    border-radius: 30px; /* ทำให้กล่องโค้ง */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 900px; 
+    height: 20px;
+    transform: translate(-50%, -50%); /* ย้ายตำแหน่งไปกึ่งกลางพอดี */
+    border-right: 1px solid #ccc; 
+    float: right; 
+    position: absolute; /* ใช้ position เพื่อควบคุมตำแหน่ง */
+    /*top: 0;  ชิดด้านบนสุดของหน้าจอ */
+    /* right: 0;  ชิดด้านขวาสุดของหน้าจอ */
+    margin-top: 300px; /**/
+    right: -30%; /* กึ่งกลางในแนวนอน */
+    display: flex; /* ใช้ flexbox เพื่อจัดตำแหน่งข้อความ */
+            justify-content: left; /* จัดข้อความให้อยู่กลางในแนวนอน */
+            align-items: center; /* จัดข้อความให้อยู่กลางในแนวตั้ง */
+            font-size: 24px; /* ขนาดตัวอักษร */
+            color: #050505; /* สีของข้อความ */
+}
