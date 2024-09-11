@@ -8,22 +8,34 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// CreateMessage สร้างข้อความใหม่ใน RoomChat
-func CreateMessage(db *gorm.DB, roomChatID uint, memberID uint, sellerID uint, content string) (*entity.Message, error) {
-	newMessage := entity.Message{
-		RoomChatID: roomChatID,
-		MemberID:   memberID,
-		SellerID:   sellerID,
-		Content:    content,
+func CreateMessage(c *gin.Context) {
+	var message entity.Message
+
+	// bind เข้าตัวแปร user
+	if err := c.ShouldBindJSON(&message); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
-	// บันทึกข้อความลงในฐานข้อมูล
-	if err := db.Create(&newMessage).Error; err != nil {
-		return nil, err
+	db := config.DB()
+	// สร้าง User
+		m := entity.Message{
+		RoomChatID: message.RoomChatID,
+		MemberID:   message.MemberID,
+		SellerID:   message.SellerID,
+		Content:    message.Content,
 	}
 
-//		return &newMessage, nil
-//	}
+	// บันทึก
+	if err := db.Create(&m).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"message": "Created success", "data": m})
+}
+
+
 func GetMessages(c *gin.Context) {
 	roomID := c.Param("room_id") // รับ room_id จาก URL
 

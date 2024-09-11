@@ -32,20 +32,28 @@ func SetupDatabase() {
 		&entity.Message{},
 	)
 
-	
 	Member := &entity.Member{
-		FirstName: "Software",
-		LastName:  "Analysis",
-		Email:     "sa@gmail.com",
-		Username: "Jibjib",
-		Password: "12345",
+		FirstName:   "Software",
+		LastName:    "Analysis",
+		Email:       "sa@gmail.com",
+		Username:    "Jibjib",
+		Password:    "12345",
 		PhoneNumber: "021313343",
-		Address: "Mittrphap Road Korat",
-		PicProfile: "ksdkgsgs",
-		
+		Address:     "Mittrphap Road Korat",
+		PicProfile:  "ksdkgsgs",
 	}
-	db.FirstOrCreate(Member, &entity.Member{
-		Email: "sa@gmail.com",
-	})
+
+	Seller := &entity.Seller{
+		StudentID:        "B6527000",
+		Year:             22,
+		Institute:        "Engineering",
+		Major:            "Computer",
+		PictureStudentID: "5661felrs",
+		MemberID:		  1,
+	}
+
+	db.FirstOrCreate(Member, &entity.Member{})
+
+	db.FirstOrCreate(Seller, &entity.Seller{})
 
 }

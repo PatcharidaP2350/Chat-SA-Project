@@ -1,22 +1,3 @@
-// package entity
-
-// import (
-//     "gorm.io/gorm"
-// )
-
-// type Seller struct {
-// 	gorm.Model
-// 	StudentId       uint
-// 	Year            uint
-// 	UserId          uint
-// 	Institute_of    string
-// 	Major           string
-// 	PictureStudent  string
-
-// 	MemberTD   uint  `gorm:"unique"`
-// 	// Products []Products  `gorm:"foreignKey:SellerID"`
-// }
-
 package entity
 
 import "gorm.io/gorm"
