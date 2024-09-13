@@ -1,33 +1,31 @@
 import { useEffect, useState } from "react";
-import { Avatar, Col, Form, Row, Space } from "antd";
-import { UserOutlined } from '@ant-design/icons';
-import { MemberInterface} from "../interfaces/IMember";
-import {MessageInterface } from "../interfaces/IMessage";
+import { Avatar, Card, Col, Form, Row, Space, message } from "antd";
+import { UserOutlined, SendOutlined, RedoOutlined  } from '@ant-design/icons';
+import { MessageInterface } from "../interfaces/IMessage";
 import "./ChatSeller.css";
+import back from "../assets/back.png";
+
 import { GetMember, SetMessage } from "../services/https";
-import { SendOutlined } from '@ant-design/icons';
 
-// function ChatSeller() {
-//   const [Member, setMember] = useState<MemberInterface[]>([]);
+interface Member {
+  MemberID:   number
+	Username:    string
+	Password:    string
+	Email:       string
+	FirstName:  string
+	LastName:    string
+	PhoneNumber: string
+	Address:     string
+	PicProfile:  string
+}
 
-//   const getMember = async () => {
-//     let res = await GetMember(1);
-//     if (res) {
-//       setMember([res]); // สมมติว่าข้อมูลที่ได้จาก GetMember เป็น object ไม่ใช่ array
-//     }
-//   };
-
-//   useEffect(() => {
-//     getMember();
-//   }, []); // เพิ่ม [] เพื่อป้องกันการเรียกใช้ซ้ำ
 
 function ChatSeller() {
-  const [Member, setMember] = useState<MemberInterface[]>([]);
-  const [loading, setLoading] = useState(true); // สถานะสำหรับการโหลด
+  const [Member, setMember] = useState<Member[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const onFinish = async (values: MessageInterface) => {
-    
-    
     let res = await SetMessage(values);
     console.log(res);
     if (res) {
@@ -35,9 +33,6 @@ function ChatSeller() {
         type: "success",
         content: "บันทึกข้อมูลสำเร็จ",
       });
-      // setTimeout(function () {
-      //   // navigate("/SellerHome");
-      // }, 2000);
     } else {
       messageApi.open({
         type: "error",
@@ -46,128 +41,150 @@ function ChatSeller() {
     }
   };
 
+  const getMember = async () => {
+    setLoading(true);
+    let data = await GetMember(1); // เรียก API เพื่อดึงข้อมูลของสมาชิก
+    console.log(data);
+    if (Array.isArray(data)) {
+      setMember(data); // ใช้ array ตรงๆ ถ้า data เป็น array
+    } else {
+      setMember([data]); // ถ้า data เป็น object ให้ใช้ [data] เพื่อทำให้เป็น array
+    }
+    setLoading(false);
+  };
+  
 
-    const getMember = async () => {
-      setLoading(true); // เริ่มต้นการโหลด
-      let res = await GetMember(1);
-      if (res) {
-        setMember([res]); // สมมติว่าข้อมูลที่ได้จาก GetMember เป็น object ไม่ใช่ array
-      }
-      setLoading(false); // โหลดเสร็จสิ้น
-    };
+  useEffect(() => {
+    getMember();
+  }, []);
 
-    useEffect(() => {
-      getMember();
-    }, []);
-
-    return (
-      <>
-      <Form 
-        onFinish={onFinish}>
-        <Row>
-          <Col
-            style={{
-              borderRadius: "12px",
-              marginLeft: "300px",
-              padding: "24px",
-              background: "#e2dfdf",
-              height: "725px",
-              width: "900px",
-              position: "relative", // เพื่อให้สามารถใช้ position: absolute ด้านในได้
-            }}
-          >
-            <Row
+  return (
+    <>
+      {contextHolder}
+      <Form onFinish={onFinish}>
+        <div className="iconHomeChatSeller">
+          <img
+                  src={back}
+                  alt="backarrow"
+                  // onClick={handleBacktoHome}
+                  style={{
+                    width: "35px",
+                    height:"35px",
+                    cursor: "pointer",
+                    marginLeft: "1400px",
+                  }}
+            />
+             <Avatar
+                    size={64}
+                    icon={<RedoOutlined />}
+                    style={{
+                      marginTop: "-5px",
+                      width: "70px",
+                      height: "45px",
+                      backgroundColor: "#0000",
+                      color: "#000",
+                    }}
+                  />
+        </div>
+          <Row>
+            <Col
               style={{
-                borderRadius: "12px 12px 0 0",
-                marginLeft: "-24px",
-                marginTop: "-23.7px",
+                borderRadius: "12px",
+                marginLeft: "300px",
                 padding: "24px",
-                background: "#3b3b3b",
-                height: "60px",
+                background: "#e2dfdf",
+                height: "725px",
                 width: "900px",
-                display: "flex", // ใช้ Flexbox เพื่อจัดตำแหน่ง
-                alignItems: "center", // จัดแนวข้อความและ Avatar
-                color: "#ffffff", // สีของข้อความ
+                position: "relative",
+                marginTop:"-42px"
               }}
             >
-              <Space wrap size={16}>
-                <Avatar
-                  size={64}
-                  icon={<UserOutlined />}
+              <Row
+                style={{
+                  borderRadius: "12px 12px 0 0",
+                  marginLeft: "-24px",
+                  marginTop: "-23.7px",
+                  padding: "24px",
+                  background: "#3b3b3b",
+                  height: "60px",
+                  width: "900px",
+                  display: "flex",
+                  alignItems: "center",
+                  color: "#ffffff",
+                }}
+              >
+                <Space wrap size={16}>
+                  <Avatar
+                    size={64}
+                    icon={<UserOutlined />}
+                    style={{
+                      marginTop: "-16px",
+                      width: "45px",
+                      height: "45px",
+                      backgroundColor: "#ffff",
+                      borderColor: "#3b3b3b",
+                      color: "#3b3b3b",
+                    }}
+                  />
+                </Space>
+                <div
                   style={{
-                    marginTop: "-16px",
-                    width: "45px",
-                    height: "45px",
-                    backgroundColor: "#ffff", // สีพื้นหลัง
-                    borderColor: "#3b3b3b", // เส้นขอบ
-                    color: "#3b3b3b", // สีข้อความ
+                    marginLeft: "16px",
+                    color: "#ffffff",
+                    marginTop: "-15px",
+                  }}
+                >
+                  <span>
+                    {loading
+                      ? "กำลังโหลด..."
+                      : Member.length > 0
+                      ? `${Member[0].FirstName} ${Member[0].LastName}`
+                      : "ไม่พบข้อมูลผู้ใช้"}
+                  </span>
+                  
+                </div>              
+
+              </Row>
+
+              {/* ส่วนสำหรับ input และไอคอน */}
+              <div className="input"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginTop: "610px",
+                  width: "100%",
+                  position: "relative",
+                }}
+              >
+                <input
+                  type="text"
+                  placeholder="พิมพ์ข้อความที่นี่"
+                  style={{
+                    flex: 1,
+                    padding: "10px",
+                    borderRadius: "8px",
+                    border: "1px solid #ccc",
+                    marginRight: "8px",
                   }}
                 />
-              </Space>
-              <div
-                style={{
-                  marginLeft: "16px",
-                  color: "#ffffff", // เปลี่ยนสีข้อความเป็นสีขาว
-                  marginTop: "-15px", // ปรับตำแหน่งข้อความให้สูงขึ้น
-                }}
-              >
-                {/* <span>ชื่อ Member (ผู้ซื้อ)</span> ข้อความที่ต้องการใส่ */}
-                <span>
-                  {/* {Member.length > 0 ? `${Member[0].FirstName} ${Member[0].LastName}` : "ชื่อ Member (ผู้ซื้อ)"} */}
-                  {loading
-                    ? "กำลังโหลด..." // ข้อความในขณะโหลด
-                    : Member.length > 0
-                    ? `${Member[1].FirstName} ${Member[1].LastName}` // แสดงชื่อหลังจากโหลดสำเร็จ
-                    : "ไม่พบข้อมูลผู้ใช้"} {/* แสดงข้อความเมื่อข้อมูลยังไม่มี */}
-                </span> แสดงชื่อผู้ซื้อ
-              </div>
-            </Row>
-
-            <div className="input" 
-            style={{
-              display: "flex", // ใช้ flexbox เพื่อจัดวาง input และ icon
-              alignItems: "center", // จัดให้อยู่กึ่งกลางแนวตั้ง
-              marginTop: "610px",
-              width: "100%", // ให้ div ขยายเต็มพื้นที่
-              position: "relative",
-            }}
-              >
-              <input
-                type="text"
-                placeholder="พิมพ์ข้อความที่นี่"
-                style={{
-                  flex: 1, // ให้ input ขยายเต็มที่
-                  padding: "10px",
-                  borderRadius: "8px",
-                  border: "1px solid #ccc",
-                  marginRight: "8px", // เว้นระยะทางขวาเล็กน้อยเพื่อเว้นระยะไอคอน
-                }}
-              />
                 <SendOutlined
                   style={{
                     cursor: "pointer",
-                    fontSize: "24px", // ขนาดของไอคอน
-                    color: "#000000", // สีของไอคอน
+                    fontSize: "24px",
+                    color: "#000000",
                   }}
                   onClick={() => {
-                    // เพิ่มฟังก์ชันเมื่อคลิกที่ไอคอนนี้
                     console.log("ส่งข้อความ");
                   }}
                 />
-            </div>
+              </div>
 
-            {/* แสดงชื่อ Member */}
-            <div>
-              {Member.map((item) => (
-                <div key={item.ID}>
-                  {item.FirstName} {item.LastName}
-                </div>
-              ))}
-            </div>
-          </Col>
-        </Row>
+              {/* แสดงชื่อ Member */}
+              
+            </Col>
+          </Row>
       </Form>
-      </>
+    </>
   );
 }
 
