@@ -41,3 +41,27 @@ func CreateRoomChat(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"message": "Created success", "data": r})
 }
 
+func GetRoomChat(c *gin.Context) {
+	ID := c.Param("room_id") // รับ room_id จาก URL
+
+	var roomchat entity.RoomChat // สร้างตัวแปรเก็บข้อมูล Messages
+
+	db := config.DB() // เชื่อมต่อกับฐานข้อมูล
+
+	// ดึงข้อความทั้งหมดใน RoomChat ที่มี room_id ตามที่ระบุ
+	results := db.Preload("Seller").Preload("Member").First(&roomchat, ID)
+
+
+	// ตรวจสอบว่าพบข้อมูลหรือไม่
+	if results.Error != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": results.Error.Error()})
+		return
+	}
+	// if roomchat.RoomChatID == 0 {
+	// 	c.JSON(http.StatusNoContent, gin.H{})
+	// 	return
+	// }
+	// ส่งข้อมูล Messages กลับไปในรูปแบบ JSON
+	c.JSON(http.StatusOK, roomchat)
+}
+
