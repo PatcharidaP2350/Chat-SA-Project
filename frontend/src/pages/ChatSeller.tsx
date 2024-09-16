@@ -3,7 +3,7 @@ import { Avatar, Card, Col, Form, Row, Space, message } from "antd";
 import { UserOutlined, SendOutlined, RedoOutlined  } from '@ant-design/icons';
 import { MessageInterface } from "../interfaces/IMessage";
 import "./ChatSeller.css";
-import back from "../assets/back.png";
+import back from "../../src/assets/back.png";
 
 import { GetMember, SetMessage } from "../services/https";
 
@@ -78,9 +78,10 @@ function ChatSeller() {
                     size={64}
                     icon={<RedoOutlined />}
                     style={{
-                      marginTop: "-5px",
+                      marginTop: "-80px",
                       width: "70px",
                       height: "45px",
+                      marginLeft: "1430px",
                       backgroundColor: "#0000",
                       color: "#000",
                     }}
@@ -96,7 +97,7 @@ function ChatSeller() {
                 height: "725px",
                 width: "900px",
                 position: "relative",
-                marginTop:"-42px"
+                marginTop:"-63px"
               }}
             >
               <Row
