@@ -6,7 +6,7 @@ import Chatbuyer from './pages/ChatBuyer.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {/* <Chatbuyer /> */}
-    <Chatseller />
+    <Chatbuyer />
+    {/* <Chatseller /> */}
   </StrictMode>,
 )
