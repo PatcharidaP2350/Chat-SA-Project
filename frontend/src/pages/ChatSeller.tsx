@@ -179,7 +179,6 @@ function ChatSeller() {
                 />
               </div>
 
-              {/* แสดงชื่อ Member */}
               
             </Col>
           </Row>
