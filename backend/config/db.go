@@ -40,7 +40,7 @@ func SetupDatabase() {
 		Password:    "12345",
 		PhoneNumber: "021313343",
 		Address:     "Mittrphap Road Korat",
-		PicProfile:  "ksdkgsgs",
+		ProfilePic:  "https://www.khaosod.co.th/wpapp/uploads/2024/09/Nong-Moo-Deng4548-5.jpg",
 	}
 
 	Seller := &entity.Seller{
