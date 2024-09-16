@@ -1,12 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import Chatseller from './pages/ChatSeller.tsx'
-import Chatbuyer from './pages/ChatBuyer.tsx'
+// import Chatbuyer from './pages/ChatBuyer.tsx'
 // import './ChatBuyer.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Chatbuyer />
-    {/* <Chatseller /> */}
+    {/* <Chatbuyer /> */}
+    <Chatseller />
   </StrictMode>,
 )

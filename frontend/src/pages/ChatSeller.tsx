@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Avatar, Col, Form, Row, Space, message } from "antd";
-import { UserOutlined, SendOutlined } from '@ant-design/icons';
+import { UserOutlined, SendOutlined, RedoOutlined} from '@ant-design/icons';
 import { MessageInterface } from "../interfaces/IMessage";
+import back from "../assets/back.png";
 import "./ChatSeller.css";
 import { GetMember, CreateMessage, GetMessage } from "../services/https";
 
@@ -25,7 +26,8 @@ function ChatSeller() {
   const [inputMessage, setInputMessage] = useState(""); // State สำหรับข้อความที่กรอก
 
   const roomChatID = 1; // ห้องแชทที่ใช้
-  const senderID = 2; // ID ของผู้ส่งข้อความ
+  const senderID = 1; // ID ของผู้ส่งข้อความ
+  const memberID = 2; // ID ของผู้รับข้อความ
 
   const onFinish = async () => {
     if (!inputMessage.trim()) {
@@ -84,7 +86,7 @@ function ChatSeller() {
   const getMember = async () => {
     setLoading(true);
     try {
-      const data = await GetMember(senderID); // เรียก API เพื่อดึงข้อมูลของสมาชิก
+      const data = await GetMember(memberID); // เรียก API เพื่อดึงข้อมูลของสมาชิก
       console.log("Fetched member:", data); // ตรวจสอบข้อมูลที่ได้รับ
       setMember(data);
     } catch (error) {
@@ -105,16 +107,42 @@ function ChatSeller() {
     <>
       {contextHolder}
       <Form onFinish={onFinish}>
+      <div className="iconHomeChatSeller">
+          <img
+                  src={back}
+                  alt="backarrow"
+                  // onClick={handleBacktoHome}
+                  style={{
+                    width: "35px",
+                    height:"35px",
+                    cursor: "pointer",
+                    marginLeft: "1400px",
+                  }}
+            />
+             <Avatar
+                    size={64}
+                    icon={<RedoOutlined />}
+                    style={{
+                      marginTop: "-80px",
+                      width: "70px",
+                      height: "45px",
+                      backgroundColor: "#0000",
+                      color: "#000",
+                      marginLeft: "1430px",
+                    }}
+                  />
+        </div>
         <Row>
           <Col
-            style={{
-              borderRadius: "12px",
-              marginLeft: "300px",
-              padding: "24px",
-              background: "#e2dfdf",
-              height: "725px",
-              width: "900px",
-              position: "relative",
+          style={{
+            borderRadius: "12px",
+            marginLeft: "300px",
+            padding: "24px",
+            background: "#e2dfdf",
+            height: "725px",
+            width: "900px",
+            position: "relative",
+            marginTop: "-59px"
             }}
           >
             <Row
@@ -164,9 +192,14 @@ function ChatSeller() {
             </Row>
 
             {/* แสดงข้อความ */}
-            <div className="messages" style={{ marginTop: "16px", overflowY: "auto", height: "calc(100% - 80px)" }}>
+            <div className="messages" 
+              style={{ 
+                marginTop: "16px", 
+                overflowY: "auto", 
+                height: "calc(100% - 80px)" }}>
               {messages.map((msg) => (
-                <div key={msg.ID} style={{ marginBottom: "10px" }}>
+                <div key={msg.ID} 
+                style={{ marginBottom: "10px" }}>
                   <strong></strong> {msg.Content}
                 </div>
               ))}

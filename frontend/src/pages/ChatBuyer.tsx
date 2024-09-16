@@ -44,7 +44,7 @@ function ChatBuyer() {
 
   const roomChatID = 1; // ห้องแชทที่ใช้
   const senderID = 2; // ID ของผู้ส่งข้อความ
-  const sellerID = 1; // ID ของผู้ส่งข้อความ
+  const sellerID = 1; // ID ของผู้รับข้อความ
 
   const onFinish = async () => {
     if (!inputMessage.trim()) {
