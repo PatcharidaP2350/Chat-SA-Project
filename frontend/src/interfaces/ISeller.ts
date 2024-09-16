@@ -1,9 +1,9 @@
 export interface SellerInterface {
-    StudentID?: string;
-    Year?: number;
-    Institute?: string;
+  StudentID?: string;
+  Year?: number;
+  Institute?: string;
 	Major?: string;
 	PictureStudentID?: string;
-	MemberID?: number;  
+	MemberID?: number;
   }
 

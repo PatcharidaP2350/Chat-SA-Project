@@ -1,5 +1,5 @@
 export interface RoomChatInterface {
-    MemberID?:  number;
+  MemberID?:  number;
 	SellerID?:  number;
 	RoomChatID?: number;
   }

@@ -4,32 +4,49 @@ import (
 	"SA-67-SongThor-SUT/config"
 	"SA-67-SongThor-SUT/entity"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
 func CreateRoomChat(c *gin.Context) {
-	var room entity.RoomChat
+	// รับค่าจาก URL path parameters
+	memberIDStr := c.Param("memberID")
+	sellerIDStr := c.Param("sellerID")
 
-	// bind เข้าตัวแปร user
-	if err := c.ShouldBindJSON(&room); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// แปลงค่าจาก string เป็น uint
+	memberID, err := strconv.ParseUint(memberIDStr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid MemberID"})
 		return
 	}
+	sellerID, err := strconv.ParseUint(sellerIDStr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid SellerID"})
+		return
+	}
+
 	db := config.DB()
 
+	// ตรวจสอบว่า SellerID ถูกต้อง
 	var seller entity.Seller
-	db.First(&seller, room.SellerID)
-	if seller.ID == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error": "seller not found"})
+	if err := db.First(&seller, sellerID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Seller not found"})
 		return
 	}
 
+	// ตรวจสอบว่า MemberID ถูกต้อง
+	var member entity.Member
+	if err := db.First(&member, memberID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Member not found"})
+		return
+	}
+
+	// สร้าง RoomChat ใหม่
 	r := entity.RoomChat{
-		MemberID: room.MemberID,
-		SellerID: room.SellerID,
+		MemberID: uint(memberID), // แปลงเป็น uint
+		SellerID: uint(sellerID), // แปลงเป็น uint
 		Seller:   seller,
-		// RoomChatID: Room.RoomChatID,
 	}
 
 	// บันทึก
@@ -51,7 +68,6 @@ func GetRoomChat(c *gin.Context) {
 	// ดึงข้อความทั้งหมดใน RoomChat ที่มี room_id ตามที่ระบุ
 	results := db.Preload("Seller").Preload("Member").First(&roomchat, ID)
 
-
 	// ตรวจสอบว่าพบข้อมูลหรือไม่
 	if results.Error != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": results.Error.Error()})
@@ -64,4 +80,3 @@ func GetRoomChat(c *gin.Context) {
 	// ส่งข้อมูล Messages กลับไปในรูปแบบ JSON
 	c.JSON(http.StatusOK, roomchat)
 }
-

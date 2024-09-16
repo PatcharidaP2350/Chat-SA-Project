@@ -14,6 +14,6 @@ type Seller struct {
 
 
 	MemberID       uint   `gorm:"unique"`  // One-to-One relationship กับ Member
-	
+	Member   Member
 }
 

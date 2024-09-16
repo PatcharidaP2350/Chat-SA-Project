@@ -1,5 +1,4 @@
-export interface MemberInterface {
-	ID?: number;
+export interface Member {
     Username?:  string;
 	Password?:  string;
 	Email?:     string;

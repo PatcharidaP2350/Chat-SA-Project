@@ -2,15 +2,13 @@ package entity
 
 
 type RoomChat struct {
+    RoomID    uint    `gorm:"primaryKey;autoIncrement"` // Primary Key
+    MemberID  uint    // ผู้ซื้อ (Member) ที่เข้าร่วมในห้องแชท
+    Member    Member  `gorm:"foreignKey:MemberID"`
 
-	RoomID uint `gorm:"primaryKey;autoIncrement"` // ใช้ uint เป็น Primary Key
+    SellerID  uint    // ผู้ขายที่เข้าร่วมในห้องแชท
+    Seller    Seller  `gorm:"foreignKey:SellerID"`
 
-	MemberID uint
-	Member   Member `gorm:"foreignKey:MemberID"`
-
-	SellerID uint
-	Seller   Seller `gorm:"foreignKey:SellerID"`
-
-	// เชื่อมต่อ one-to-many กับ Message
-	Messages []Message `gorm:"foreignKey:RoomChatID"`
+    // ความสัมพันธ์ one-to-many กับ Message
+    Messages  []Message `gorm:"foreignKey:RoomChatID"`
 }

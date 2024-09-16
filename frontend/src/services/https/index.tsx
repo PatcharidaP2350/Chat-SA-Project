@@ -22,30 +22,7 @@ async function CreateRoomChat(data: RoomChatInterface) {
   
     return res;
   }
-
-
-
-  async function SetMessage(data: MessageInterface) {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
   
-    let res = await fetch(`${apiUrl}/message`, requestOptions)
-      .then((res) => {
-        if (res.status == 201) {
-          return res.json();
-        } else {
-          return false;
-        }
-      });
-  
-    return res;
-  }
-
-
-
   async function GetMessage(id:Number | undefined) {
     const requestOptions = {
       method: "GET",
@@ -54,7 +31,7 @@ async function CreateRoomChat(data: RoomChatInterface) {
       },
     };
   
-    let res = await fetch(`${apiUrl}/message/${id}`, requestOptions)
+    let res = await fetch(`${apiUrl}/roomchat/${id}`, requestOptions)
       .then((res) => {
         if (res.status == 200) {
           return res.json();
@@ -126,12 +103,77 @@ async function CreateRoomChat(data: RoomChatInterface) {
   }  
 
 
+  async function CreateMessage(messageData: MessageInterface) {
+    try {
+      // แปลงคีย์ของ messageData
+      const formattedData = {
+        room_chat_id: messageData.room_chat_id,
+        content: messageData.content,
+        sender_id: messageData.sender_id,
+      };
+  
+      const response = await fetch(`${apiUrl}/message`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formattedData),
+      });
+  
+      if (response.ok) {
+        return await response.json();
+      } else {
+        console.error(`Error: ${response.statusText}`);
+        return false;
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(`Error: ${error.message}`);
+      } else {
+        console.error("An unknown error occurred");
+      }
+      return false;
+    }
+  }
+  
+  async function GetMemberBySeller(seller_id: number | undefined) {
+    if (seller_id === undefined) {
+      console.error("Seller ID is undefined");
+      return false;
+    }
+  
+    const requestOptions: RequestInit = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+  
+    try {
+      const response = await fetch(`${apiUrl}/memberbyseller/${seller_id}`, requestOptions);
+  
+      // ตรวจสอบว่าการตอบสนองถูกต้องหรือไม่
+      if (!response.ok) {
+        console.error("Error fetching member by seller:", response.statusText);
+        return false;
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Fetch error:", error);
+      return false;
+    }
+  }
+  
+
+
+
   export {
+    CreateMessage,
     CreateRoomChat,
-    SetMessage, 
     GetMessage,
     GetRoomChat,
     GetMember,
     GetSeller,
+    GetMemberBySeller
   };
 

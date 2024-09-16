@@ -24,15 +24,13 @@ func main() {
 	router := r.Group("")
 	{
 
-		// Room Routes
-		router.POST("/roomchat", controller.CreateRoomChat)
+		router.GET("/member/:member_id", controller.GetMember)
+		router.POST("/roomchat/member/:memberID/seller/:sellerID", controller.CreateRoomChat)
 		router.GET("/roomchat/:room_id", controller.GetMessages)
-		router.POST("/message", controller.SetMessage)
-		// 	router.PATCH("/message", controller.createMessege)
-		// 	router.DELETE("/users/:id", controller.DeleteUser)
-		// 	// Gender Routes
-		// 	router.GET("/genders", controller.ListGenders)
-		// }
+		router.POST("/message", controller.CreateMessage)
+		router.POST("/member", controller.CreateMember)
+		router.GET("/memberbyseller/:id", controller.GetMemberBySeller)
+
 
 		r.GET("/", func(c *gin.Context) {
 			c.String(http.StatusOK, "API RUNNING... PORT: %s", PORT)
